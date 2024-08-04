@@ -1,18 +1,20 @@
-import { cva, VariantProps } from 'class-variance-authority';
 import Clock from './Clock';
+import '@/utils/indexed-db/db';
 
-const timerVariants = cva([''], {
-  variants: {
-    mode: {
-      clock: [],
-    },
-  },
-});
+interface TimerProps {
+  mode: 'clock';
+  background: string;
+  opacity: number;
+}
 
-type TimerVariantsProps = VariantProps<typeof timerVariants>;
-
-interface TimerProps extends TimerVariantsProps {}
-
-export default function Timer({ mode } : TimerProps) {
-  return mode === 'clock' ? <Clock /> : null;
+export default function Timer({ mode, background, opacity = 0 }: TimerProps) {
+  return (
+    <div
+      className="flex items-center justify-center w-screen h-screen relative"
+      style={{ background: `url(${background})` }}
+    >
+      {mode === 'clock' ? <Clock /> : null}
+      <div className="absolute w-full h-full bg-black" style={{ opacity }} />
+    </div>
+  );
 }

@@ -8,8 +8,8 @@ export default function Clock() {
 
   useEffect(() => {
     const timeInterval = setInterval(() => {
-      const now = DateTime.now();
-      const formattedTime = now.toFormat('HH:mm:ss');
+      const currentTime = DateTime.now();
+      const formattedTime = currentTime.toFormat('HH:mm');
       setTimeString(formattedTime);
     }, 1000);
 
@@ -18,5 +18,9 @@ export default function Clock() {
     };
   });
 
-  return <div>{timeString}</div>;
+  return (
+    <div className="text-9xl dark:text-white z-10">
+      {timeString}
+    </div>
+  );
 }

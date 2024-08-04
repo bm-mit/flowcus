@@ -17,15 +17,14 @@ const config: StorybookConfig = {
   },
   staticDirs: ["../public"],
   webpackFinal: async (config) => {
-    // Find the existing rule that handles SVGs
     const fileLoaderRule = config!.module!.rules!.find(
+      // @ts-ignore
       (rule) => rule!.test && rule!.test.test(".svg"),
     );
 
-    // Modify the existing rule to ignore SVGs
+    // @ts-ignore
     fileLoaderRule!.exclude = /\.svg$/;
 
-    // Add a new rule for handling SVGs using SVGR
     config!.module!.rules!.push({
       test: /\.svg$/,
       use: ["@svgr/webpack"],
