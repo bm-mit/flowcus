@@ -1,0 +1,18 @@
+{
+  "root": true,
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "airbnb",
+    "airbnb-typescript",
+    "next/core-web-vitals",
+    "plugin:storybook/recommended"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  }
+}
