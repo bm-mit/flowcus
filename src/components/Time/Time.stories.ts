@@ -1,8 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react';
-import Timer from './Timer';
+import TimerMode from '@/types/timer-mode.types';
+import Time from './Time';
 
-const meta: Meta<typeof Timer> = {
-  component: Timer,
+const meta: Meta<typeof Time> = {
+  component: Time,
   argTypes: {
     mode: {
       table: {
@@ -16,10 +17,10 @@ const meta: Meta<typeof Timer> = {
 };
 export default meta;
 
-type Story = StoryObj<typeof Timer>;
+type Story = StoryObj<typeof Time>;
 
 export const Clock: Story = {
   args: {
-    mode: 'clock',
+    mode: TimerMode.clock,
   },
 };

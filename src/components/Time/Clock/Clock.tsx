@@ -3,7 +3,11 @@
 import { DateTime } from 'luxon';
 import { useEffect, useState } from 'react';
 
-export default function Clock() {
+interface ClockProps {
+  timerColor: string
+}
+
+export default function Clock({ timerColor }: ClockProps) {
   const [timeString, setTimeString] = useState<string>('');
 
   useEffect(() => {
@@ -19,7 +23,7 @@ export default function Clock() {
   });
 
   return (
-    <div className="text-9xl z-10">
+    <div className="text-9xl" style={{ color: timerColor }}>
       {timeString}
     </div>
   );
