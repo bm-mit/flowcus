@@ -19,7 +19,7 @@ export default function Clock() {
   });
 
   return (
-    <div className="text-9xl dark:text-white z-10">
+    <div className="text-9xl z-10">
       {timeString}
     </div>
   );

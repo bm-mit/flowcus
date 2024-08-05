@@ -8,10 +8,10 @@ export type Db = Dexie & {
   configProfiles: EntityTable<ConfigProfile, 'id'>;
 };
 
-const db = new Dexie('UserConfigsH') as Db;
+const db = new Dexie('UserConfigs') as Db;
 
 db.version(1).stores({
-  configProfiles: '++id, backgroundImage, overlayColor, overlayOpacity',
+  configProfiles: '++id, backgroundImageUrl, overlayColor, overlayOpacity, timerColor',
 });
 
 db.on('populate', populate);

@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
-import { Josefin_Sans } from 'next/font/google';
 import './globals.css';
 import React from 'react';
-
-const josefinSans = Josefin_Sans({ subsets: ['latin'] });
+import { josefinSans } from '@/utils/fonts';
 
 export const metadata: Metadata = {
   title: 'Flowcus',

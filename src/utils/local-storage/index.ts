@@ -9,7 +9,7 @@ localForage.config({
 });
 
 const localStorage = {
-  getItem: async<T> (key: keyof typeof defaultLocalStorageValues) : Promise<T> => {
+  getItem: async<T> (key: keyof typeof defaultLocalStorageValues): Promise<T> => {
     const existingItem = await localForage.getItem(key);
 
     if (existingItem) {
@@ -18,6 +18,11 @@ const localStorage = {
     await localForage.setItem(key, defaultLocalStorageValues[key]);
     return defaultLocalStorageValues[key] as T;
   },
+
+  setItem: async <T>(
+    key: keyof typeof defaultLocalStorageValues,
+    value?: T,
+  ) => localForage.setItem(key, value),
 };
 
 export default localStorage;

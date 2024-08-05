@@ -1,6 +1,7 @@
 export interface ConfigProfile {
   id: number,
-  backgroundImage: string;
+  backgroundImageUrl: string;
   overlayColor: string;
   overlayOpacity: number;
+  timerColor: string
 }
