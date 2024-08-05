@@ -5,8 +5,10 @@ import localStorage from '@/utils/local-storage';
 import { CONFIG_PROFILE_ID } from '@/utils/local-storage/keys';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import TimerModeSelector from '@/components/Time/TimerModeSelector';
 import TimerMode from '@/types/timer-mode.types';
+import ReactDOM from 'react-dom';
+import Stopwatch from '@/components/Time/Stopwatch';
+import TimeModeSelector from './TimeModeSelector';
 import Clock from './Clock';
 
 export interface TimerProps {
@@ -18,6 +20,8 @@ export default function Time({ mode }: TimerProps) {
   const [overlayOpacity, setOverlayOpacity] = useState<number>(1);
   const [overlayColor, setOverlayColor] = useState<string>('black');
   const [timerColor, setTimerColor] = useState<string>('white');
+
+  ReactDOM.preconnect('https://www.images.unsplash.com');
 
   useEffect(() => {
     (async () => {
@@ -34,13 +38,22 @@ export default function Time({ mode }: TimerProps) {
     })();
   });
 
+  let widget = <Clock timerColor={timerColor} />;
+  switch (mode) {
+    case TimerMode.stopwatch:
+      widget = <Stopwatch />;
+      break;
+    default:
+      break;
+  }
+
   return (
     <div className="relative flex h-screen w-screen items-center justify-center">
-      <Image src={backgroundUrl} layout="fill" objectFit="cover" alt="background image" />
+      <Image src={backgroundUrl} fill priority style={{ objectFit: 'cover' }} alt="background image" />
 
       <div className="z-10 flex flex-col items-center">
-        {mode === TimerMode.clock ? <Clock timerColor={timerColor} /> : null}
-        <TimerModeSelector />
+        {widget}
+        <TimeModeSelector />
       </div>
 
       <div className="absolute h-full w-full" style={{ opacity: overlayOpacity, backgroundColor: overlayColor }} />

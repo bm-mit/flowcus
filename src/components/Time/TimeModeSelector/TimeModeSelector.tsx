@@ -3,7 +3,7 @@ import TimerModeContext from '@/contexts/TimerModeContext';
 import TimerMode from '@/types/timer-mode.types';
 import clsx from 'clsx';
 
-export default function TimerModeSelector() {
+export default function TimeModeSelector() {
   const { timerMode, setTimerMode } = useContext(TimerModeContext);
 
   function changeMode(mode: TimerMode): void {
