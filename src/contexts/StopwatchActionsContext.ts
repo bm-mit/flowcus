@@ -1,15 +1,15 @@
 import { createContext } from 'react';
 
 type StopwatchActionsContextType = {
-  startTimer: () => void,
   resetTimer: () => void,
   pauseTimer: () => void,
+  paused: boolean
 };
 
 const StopwatchActionsContext = createContext<StopwatchActionsContextType>({
-  startTimer: () => {},
   resetTimer: () => {},
   pauseTimer: () => {},
+  paused: true,
 });
 
 export default StopwatchActionsContext;

@@ -1,21 +1,21 @@
 'use client';
 
-import { DateTime } from 'luxon';
 import { useEffect, useState } from 'react';
+import time from '@/utils/time';
 
 interface ClockProps {
   timerColor?: string
 }
 
+const timeFormat = 'HH:mm';
+
 export default function Clock({ timerColor = 'white' }: ClockProps) {
-  const [timeString, setTimeString] = useState<string>('');
+  const [timeString, setTimeString] = useState<string>(time.getCurrentTimeString(timeFormat));
 
   useEffect(() => {
     const timeInterval = setInterval(() => {
-      const currentTime = DateTime.now();
-      const formattedTime = currentTime.toFormat('HH:mm');
-      setTimeString(formattedTime);
-    }, 1000);
+      setTimeString(time.getCurrentTimeString(timeFormat));
+    }, 10);
 
     return () => {
       clearInterval(timeInterval);

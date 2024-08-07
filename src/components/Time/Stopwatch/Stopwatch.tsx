@@ -6,6 +6,7 @@ import {
 import localStorage from '@/utils/local-storage';
 import { START_STOPWATCH_TIME, STOPWATCH_RECORDED_TIME } from '@/utils/local-storage/keys';
 import StopwatchActionsContext from '@/contexts/StopwatchActionsContext';
+import time from '@/utils/time';
 import StopwatchController from './StopwatchController';
 
 interface StopwatchProps {
@@ -23,16 +24,17 @@ export default function Stopwatch({ timerColor = 'white' }: StopwatchProps) {
       setStartTime(await localStorage.getItem(START_STOPWATCH_TIME));
       setTimeRecorded(await localStorage.getItem(STOPWATCH_RECORDED_TIME));
     })();
+  }, []);
 
+  useEffect(() => {
     const updateTimeInterval = setInterval(() => {
       if (!paused) setTimeElapsed(Date.now() - startTime);
     }, 1);
 
     return () => clearInterval(updateTimeInterval);
-  }, [paused, startTime]);
+  }, [startTime]);
 
   const resetTimer = useCallback(() => {
-    setPaused(true);
     setTimeRecorded(0);
     setTimeElapsed(0);
 
@@ -43,6 +45,8 @@ export default function Stopwatch({ timerColor = 'white' }: StopwatchProps) {
   }, []);
 
   const pauseTimer = useCallback(() => {
+    setPaused(!paused);
+
     if (!paused) {
       const currentTime = timeElapsed + timeRecorded;
       setTimeRecorded(currentTime);
@@ -53,34 +57,24 @@ export default function Stopwatch({ timerColor = 'white' }: StopwatchProps) {
     } else {
       const now = Date.now();
       setStartTime(now);
-
       (async () => {
         await localStorage.setItem(START_STOPWATCH_TIME, now);
       })();
     }
-
-    setPaused(!paused);
   }, [timeElapsed, timeRecorded, paused]);
 
-  const startTimer = useCallback(() => {
-    setPaused(false);
-
-    (async () => {
-      await localStorage.setItem(START_STOPWATCH_TIME, Date.now());
-      await localStorage.setItem(STOPWATCH_RECORDED_TIME, 0);
-    })();
-  }, []);
-
   const stopwatchActions = useMemo(
-    () => ({ resetTimer, pauseTimer, startTimer }),
-    [resetTimer, pauseTimer, startTimer],
+    () => ({
+      resetTimer, pauseTimer, paused,
+    }),
+    [resetTimer, pauseTimer, paused],
   );
 
   return (
     <StopwatchActionsContext.Provider value={stopwatchActions}>
       <StopwatchController />
-      <div className="text-9xl min-h-32" style={{ color: timerColor }}>
-        {paused ? timeRecorded : timeRecorded + timeElapsed}
+      <div className="text-9xl min-h-32 font-mono" style={{ color: timerColor }}>
+        {time.millisToString(paused ? timeRecorded : timeRecorded + timeElapsed)}
       </div>
     </StopwatchActionsContext.Provider>
   );

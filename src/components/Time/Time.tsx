@@ -38,21 +38,15 @@ export default function Time({ mode }: TimerProps) {
     })();
   });
 
-  let widget = <Clock timerColor={timerColor} />;
-  switch (mode) {
-    case TimerMode.stopwatch:
-      widget = <Stopwatch />;
-      break;
-    default:
-      break;
-  }
-
   return (
     <div className="relative flex h-screen w-screen items-center justify-center">
       <Image src={backgroundUrl} fill priority style={{ objectFit: 'cover' }} alt="background image" />
 
       <div className="z-10 flex flex-col items-center">
-        {widget}
+        {mode === TimerMode.clock && <Clock timerColor={timerColor} /> }
+        {mode === TimerMode.stopwatch && <Stopwatch />}
+        {mode === TimerMode.timer && null}
+
         <TimeModeSelector />
       </div>
 
