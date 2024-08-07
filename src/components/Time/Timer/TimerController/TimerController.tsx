@@ -2,26 +2,26 @@ import clsx from 'clsx';
 import { Timer } from 'react-use-precision-timer';
 
 interface StopwatchControllerProps {
-  stopwatch: Timer
+  timer: Timer
 }
 
-export default function StopwatchController({ stopwatch } : StopwatchControllerProps) {
+export default function TimerController({ timer } : StopwatchControllerProps) {
   function togglePlayState() {
-    if (!stopwatch.isStarted()) stopwatch.start();
-    else if (stopwatch.isPaused()) stopwatch.resume();
-    else stopwatch.pause();
+    if (!timer.isStarted()) timer.start();
+    else if (timer.isPaused()) timer.resume();
+    else timer.pause();
   }
 
   return (
     <div className="grid w-60 grid-cols-2 gap-4 text-center text-lg text-white h-8 -mt-8">
       <button
         type="button"
-        disabled={!stopwatch.isPaused()}
+        disabled={!timer.isPaused()}
         className={clsx(
           'flex items-center justify-center rounded-full bg-black bg-opacity-40 transition-colors',
-          !stopwatch.isPaused() && 'text-gray-500',
+          !timer.isPaused() && 'text-gray-500',
         )}
-        onClick={stopwatch.stop}
+        onClick={timer.stop}
       >
         Reset
       </button>
@@ -31,8 +31,8 @@ export default function StopwatchController({ stopwatch } : StopwatchControllerP
         className="flex items-center justify-center rounded-full bg-black bg-opacity-40"
         onClick={togglePlayState}
       >
-        {!stopwatch.isStarted() && 'Start'}
-        {stopwatch.isStarted() && (stopwatch.isPaused() ? 'Resume' : 'Pause')}
+        {!timer.isStarted() && 'Start'}
+        {timer.isStarted() && (timer.isPaused() ? 'Resume' : 'Pause')}
       </button>
     </div>
   );
