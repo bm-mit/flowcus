@@ -1,6 +1,7 @@
 const defaultLocalStorageValues = {
   configProfileId: 1,
-  startStopwatchTime: null,
+  startStopwatchTime: Date.now(),
+  timeRecorded: 0,
 };
 
 export default defaultLocalStorageValues;
