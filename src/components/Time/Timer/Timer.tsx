@@ -1,6 +1,7 @@
 import { useTimer } from 'react-use-precision-timer';
 import { useEffect, useState } from 'react';
 import TimerController from '@/components/Time/Timer/TimerController';
+import time from '@/utils/time';
 
 interface TimerProps {
   timerColor?: string;
@@ -24,8 +25,8 @@ export default function Timer({ timerColor = 'white', delay = 0 } : TimerProps) 
   return (
     <>
       <TimerController timer={timer} />
-      <div className="min-h-32 text-9xl" style={{ color: timerColor }}>
-        {timeShown}
+      <div className="min-h-32 text-9xl font-mono" style={{ color: timerColor }}>
+        {time.millisToString(timeShown)}
       </div>
     </>
   );

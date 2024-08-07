@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import TimerMode from '@/types/timer-mode.types';
 import ReactDOM from 'react-dom';
-import Stopwatch from '@/components/Time/Stopwatch';
 import Timer from '@/components/Time/Timer';
 import TimeModeSelector from './TimeModeSelector';
 import Clock from './Clock';
@@ -45,8 +44,8 @@ export default function Time({ mode }: TimerProps) {
 
       <div className="z-10 flex flex-col items-center">
         {mode === TimerMode.clock && <Clock timerColor={timerColor} /> }
-        {mode === TimerMode.stopwatch && <Stopwatch timerColor={timerColor} />}
-        {mode === TimerMode.timer && <Timer delay={1000000} />}
+        {mode === TimerMode.stopwatch && <Timer timerColor={timerColor} />}
+        {mode === TimerMode.timer && <Timer delay={1000000} timerColor={timerColor} />}
 
         <TimeModeSelector />
       </div>
