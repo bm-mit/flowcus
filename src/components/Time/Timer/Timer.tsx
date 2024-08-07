@@ -25,7 +25,7 @@ export default function Timer({ timerColor = 'white', delay = 0 } : TimerProps) 
   return (
     <>
       <TimerController timer={timer} />
-      <div className="min-h-32 text-9xl font-mono" style={{ color: timerColor }}>
+      <div className="font-mono text-9xl min-h-32" style={{ color: timerColor }}>
         {time.millisToString(timeShown)}
       </div>
     </>

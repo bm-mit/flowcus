@@ -13,7 +13,7 @@ export default function TimerController({ timer } : StopwatchControllerProps) {
   }
 
   return (
-    <div className="grid w-60 grid-cols-2 gap-4 text-center text-lg text-white h-8 -mt-8">
+    <div className="-mt-8 grid h-8 w-60 grid-cols-2 gap-4 text-center text-lg text-white">
       <button
         type="button"
         disabled={!timer.isPaused()}
