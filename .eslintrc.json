@@ -3,7 +3,8 @@
   "plugins": [
     "@typescript-eslint",
     "react",
-    "prettier"
+    "prettier",
+    "tailwindcss"
   ],
   "parser": "@typescript-eslint/parser",
   "extends": [
@@ -14,20 +15,35 @@
     "airbnb-typescript",
     "next/core-web-vitals",
     "plugin:storybook/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:tailwindcss/recommended"
   ],
   "parserOptions": {
     "project": "./tsconfig.json"
   },
+  "settings": {
+    "tailwindcss": {
+      "callees": [
+        "clsx",
+        "cva",
+        "twMerge"
+      ]
+    }
+  },
   "rules": {
-    "prettier/prettier": ["error", {
-      "singleQuote": true
-    }],
-    "react/function-component-definition": [
+    "prettier/prettier": [
       "error",
       {
-        "namedComponents": "function-declaration",
-        "unnamedComponents": "arrow-function"
+        "singleQuote": true
+      }
+    ],
+    "tailwindcss/classnames-order": "warn",
+    "tailwindcss/no-custom-classname": [
+      "warn",
+      {
+        "whitelist": [
+          "dark"
+        ]
       }
     ],
     "import/no-extraneous-dependencies": [
@@ -40,13 +56,18 @@
         "peerDependencies": true
       }
     ],
-    "import/prefer-default-export": [
-      "warn"
-    ],
+    "import/prefer-default-export": "warn",
     "react/require-default-props": [
       "error",
       {
         "functions": "defaultArguments"
+      }
+    ],
+    "react/function-component-definition": [
+      "error",
+      {
+        "namedComponents": "function-declaration",
+        "unnamedComponents": "arrow-function"
       }
     ]
   }

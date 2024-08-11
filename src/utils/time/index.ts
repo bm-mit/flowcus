@@ -1,4 +1,5 @@
 import { DateTime } from 'luxon';
+import { TimeUnits } from '@/types/time.types';
 
 const time = {
   getCurrentTimeString(format: string): string {
@@ -6,21 +7,26 @@ const time = {
     return current.toFormat(format);
   },
 
-  millisToString(millis: number): string {
+  millisToUnits(millis: number): TimeUnits {
     let temp = millis;
 
-    const ms = String(temp % 1000).padStart(3, '0');
-    temp = Math.trunc(temp / 1000);
+    const milliseconds = temp % 1000;
+    temp = Math.floor(temp / 1000);
 
-    const s = String(temp % 60).padStart(2, '0');
-    temp = Math.trunc(temp / 60);
+    const seconds = temp % 60;
+    temp = Math.floor(temp / 60);
 
-    const m = String(temp % 60).padStart(2, '0');
-    temp = Math.trunc(temp / 60);
+    const minutes = temp % 60;
+    temp = Math.floor(temp / 60);
 
-    const h = String(temp).padStart(2, '0');
+    const hours = temp;
 
-    return `${h}:${m}:${s}:${ms}`;
+    return {
+      milliseconds,
+      seconds,
+      minutes,
+      hours,
+    };
   },
 };
 

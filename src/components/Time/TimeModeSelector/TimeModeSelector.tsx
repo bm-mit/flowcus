@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import TimerModeContext from '@/contexts/TimerModeContext';
 import TimerMode from '@/types/timer-mode.types';
 import clsx from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export default function TimeModeSelector() {
   const { timerMode, setTimerMode } = useContext(TimerModeContext);
@@ -12,16 +13,48 @@ export default function TimeModeSelector() {
 
   return (
     <div className="relative box-content grid h-10 w-60 grid-cols-3 rounded-full border-2 border-gray-200">
-      <div role="presentation" onClick={() => changeMode(TimerMode.clock)} />
-      <div
-        role="presentation"
-        onClick={() => changeMode(TimerMode.stopwatch)}
+      <button
+        type="button"
+        onClick={() => changeMode(TimerMode.clock)}
+        aria-label="clock mode"
+        className={twMerge(
+          'rounded-full transition-colors',
+          'hover:bg-white/50 hover:outline-none',
+          'focus:bg-white/50 focus:outline-none',
+          timerMode === TimerMode.clock &&
+            'hover:bg-transparent focus:bg-transparent',
+        )}
       />
-      <div role="presentation" onClick={() => changeMode(TimerMode.timer)} />
+
+      <button
+        type="button"
+        onClick={() => changeMode(TimerMode.stopwatch)}
+        aria-label="stopwatch mode"
+        className={twMerge(
+          'rounded-full transition-colors',
+          'hover:bg-white/50 hover:outline-none',
+          'focus:bg-white/50 focus:outline-none',
+          timerMode === TimerMode.stopwatch &&
+            'hover:bg-transparent focus:bg-transparent',
+        )}
+      />
+
+      <button
+        type="button"
+        onClick={() => changeMode(TimerMode.timer)}
+        aria-label="timer mode"
+        className={twMerge(
+          'rounded-full transition-colors',
+          'hover:bg-white/50 hover:outline-none',
+          'focus:bg-white/50 focus:outline-none',
+          timerMode === TimerMode.timer &&
+            'hover:bg-transparent focus:bg-transparent',
+        )}
+      />
 
       <div
         className={clsx(
-          'absolute w-20 h-full bg-blue-600 -z-10 rounded-full transition-all',
+          'absolute -z-10 h-full w-20 rounded-full bg-blue-600 transition-all',
           timerMode === TimerMode.stopwatch && 'translate-x-20',
           timerMode === TimerMode.timer && 'translate-x-40',
         )}

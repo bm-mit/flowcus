@@ -1,14 +1,15 @@
 import { useTimer } from 'react-use-precision-timer';
-import { useEffect, useState } from 'react';
+import { HTMLAttributes, useEffect, useState } from 'react';
 import TimerController from '@/components/Time/Timer/TimerController';
 import time from '@/utils/time';
+import TimerView from '@/components/Time/Timer/TimerView/TimerView';
+import { twMerge } from 'tailwind-merge';
 
-interface TimerProps {
-  timerColor?: string;
+interface TimerProps extends HTMLAttributes<HTMLDivElement> {
   delay?: number;
 }
 
-export default function Timer({ timerColor = 'white', delay = 0 }: TimerProps) {
+export default function Timer({ delay = 0, className }: TimerProps) {
   const timer = useTimer({ delay });
   const [timeShown, setTimeShown] = useState(0);
 
@@ -25,14 +26,9 @@ export default function Timer({ timerColor = 'white', delay = 0 }: TimerProps) {
   }, [timer, delay]);
 
   return (
-    <>
+    <div className={twMerge('flex flex-col items-center', className)}>
       <TimerController timer={timer} />
-      <div
-        className="font-mono text-9xl min-h-32"
-        style={{ color: timerColor }}
-      >
-        {time.millisToString(timeShown)}
-      </div>
-    </>
+      <TimerView units={time.millisToUnits(timeShown)} />
+    </div>
   );
 }

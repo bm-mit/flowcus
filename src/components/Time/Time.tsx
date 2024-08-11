@@ -3,23 +3,21 @@
 import db from '@/utils/indexed-db/db';
 import localStorage from '@/utils/local-storage';
 import { CONFIG_PROFILE_ID } from '@/utils/local-storage/keys';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 import TimerMode from '@/types/timer-mode.types';
 import ReactDOM from 'react-dom';
 import Timer from '@/components/Time/Timer';
+import TimerModeContext from '@/contexts/TimerModeContext';
+import clsx from 'clsx';
 import TimeModeSelector from './TimeModeSelector';
 import Clock from './Clock';
 
-export interface TimerProps {
-  mode: TimerMode;
-}
-
-export default function Time({ mode }: TimerProps) {
+export default function Time() {
+  const { timerMode } = useContext(TimerModeContext);
   const [backgroundUrl, setBackgroundUrl] = useState<string>('/');
   const [overlayOpacity, setOverlayOpacity] = useState<number>(1);
   const [overlayColor, setOverlayColor] = useState<string>('black');
-  const [timerColor, setTimerColor] = useState<string>('white');
 
   ReactDOM.preconnect('https://www.images.unsplash.com');
 
@@ -34,7 +32,6 @@ export default function Time({ mode }: TimerProps) {
         setBackgroundUrl(configProfile.backgroundImageUrl);
         setOverlayOpacity(configProfile.overlayOpacity);
         setOverlayColor(configProfile.overlayColor);
-        setTimerColor(configProfile.timerColor);
       }
     })();
   });
@@ -50,17 +47,22 @@ export default function Time({ mode }: TimerProps) {
       />
 
       <div className="z-10 flex flex-col items-center">
-        {mode === TimerMode.clock && <Clock timerColor={timerColor} />}
-        {mode === TimerMode.stopwatch && <Timer timerColor={timerColor} />}
-        {mode === TimerMode.timer && (
-          <Timer delay={1000000} timerColor={timerColor} />
-        )}
+        <Clock className={clsx(timerMode !== TimerMode.clock && 'hidden')} />
+
+        <Timer
+          className={clsx(timerMode !== TimerMode.stopwatch && 'hidden')}
+        />
+
+        <Timer
+          delay={1000000}
+          className={clsx(timerMode !== TimerMode.timer && 'hidden')}
+        />
 
         <TimeModeSelector />
       </div>
 
       <div
-        className="absolute h-full w-full"
+        className="absolute size-full"
         style={{ opacity: overlayOpacity, backgroundColor: overlayColor }}
       />
     </div>

@@ -1,15 +1,16 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { HTMLAttributes, useEffect, useMemo, useState } from 'react';
+import useTimerColorContext from '@/hooks/useTimerColorContext';
 import time from '@/utils/time';
+import { twMerge } from 'tailwind-merge';
 
-interface ClockProps {
-  timerColor?: string;
-}
+interface ClockProps extends HTMLAttributes<HTMLDivElement> {}
 
-const timeFormat = 'HH:mm';
+export default function Clock({ className }: ClockProps) {
+  const { timerColor } = useTimerColorContext();
+  const timeFormat = useMemo(() => 'HH:mm', []);
 
-export default function Clock({ timerColor = 'white' }: ClockProps) {
   const [timeString, setTimeString] = useState<string>(
     time.getCurrentTimeString(timeFormat),
   );
@@ -25,7 +26,10 @@ export default function Clock({ timerColor = 'white' }: ClockProps) {
   });
 
   return (
-    <div className="text-9xl min-h-32" style={{ color: timerColor }}>
+    <div
+      className={twMerge('min-h-32 select-none text-9xl', className)}
+      style={{ color: timerColor }}
+    >
       {timeString}
     </div>
   );

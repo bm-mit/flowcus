@@ -18,7 +18,7 @@ export default function TimerController({ timer }: StopwatchControllerProps) {
         type="button"
         disabled={!timer.isPaused()}
         className={clsx(
-          'flex items-center justify-center rounded-full bg-black bg-opacity-40 transition-colors',
+          'flex items-center justify-center rounded-full bg-black/40 transition-colors',
           !timer.isPaused() && 'text-gray-500',
         )}
         onClick={timer.stop}
@@ -28,7 +28,7 @@ export default function TimerController({ timer }: StopwatchControllerProps) {
 
       <button
         type="button"
-        className="flex items-center justify-center rounded-full bg-black bg-opacity-40"
+        className="flex items-center justify-center rounded-full bg-black/40"
         onClick={togglePlayState}
       >
         {!timer.isStarted() && 'Start'}

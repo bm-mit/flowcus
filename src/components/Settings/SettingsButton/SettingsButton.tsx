@@ -12,7 +12,7 @@ export default function SettingsButton({
     <button
       type="button"
       className={twMerge(
-        'hover:bg-teal-900 transition-all rounded-full size-12',
+        'size-12 rounded-full transition-all hover:bg-teal-900',
         className,
       )}
       onClick={onClick}
