@@ -8,13 +8,15 @@ interface TimerProps {
   delay?: number;
 }
 
-export default function Timer({ timerColor = 'white', delay = 0 } : TimerProps) {
+export default function Timer({ timerColor = 'white', delay = 0 }: TimerProps) {
   const timer = useTimer({ delay });
   const [timeShown, setTimeShown] = useState(0);
 
   useEffect(() => {
     const useTimeInterval = setInterval(() => {
-      const timeValue = delay ? timer.getRemainingTime() : timer.getElapsedRunningTime();
+      const timeValue = delay
+        ? timer.getRemainingTime()
+        : timer.getElapsedRunningTime();
 
       setTimeShown(timer.isStarted() ? timeValue : timer.getEffectiveDelay());
     }, 1);
@@ -25,7 +27,10 @@ export default function Timer({ timerColor = 'white', delay = 0 } : TimerProps) 
   return (
     <>
       <TimerController timer={timer} />
-      <div className="font-mono text-9xl min-h-32" style={{ color: timerColor }}>
+      <div
+        className="font-mono text-9xl min-h-32"
+        style={{ color: timerColor }}
+      >
         {time.millisToString(timeShown)}
       </div>
     </>

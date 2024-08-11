@@ -2,10 +2,10 @@ import clsx from 'clsx';
 import { Timer } from 'react-use-precision-timer';
 
 interface StopwatchControllerProps {
-  timer: Timer
+  timer: Timer;
 }
 
-export default function TimerController({ timer } : StopwatchControllerProps) {
+export default function TimerController({ timer }: StopwatchControllerProps) {
   function togglePlayState() {
     if (!timer.isStarted()) timer.start();
     else if (timer.isPaused()) timer.resume();

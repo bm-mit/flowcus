@@ -12,7 +12,7 @@ import TimeModeSelector from './TimeModeSelector';
 import Clock from './Clock';
 
 export interface TimerProps {
-  mode: TimerMode
+  mode: TimerMode;
 }
 
 export default function Time({ mode }: TimerProps) {
@@ -25,7 +25,8 @@ export default function Time({ mode }: TimerProps) {
 
   useEffect(() => {
     (async () => {
-      const configProfileId = await localStorage.getItem<number>(CONFIG_PROFILE_ID);
+      const configProfileId =
+        await localStorage.getItem<number>(CONFIG_PROFILE_ID);
 
       const configProfile = await db.configProfiles.get(configProfileId);
 
@@ -40,17 +41,28 @@ export default function Time({ mode }: TimerProps) {
 
   return (
     <div className="relative flex h-screen w-screen items-center justify-center">
-      <Image src={backgroundUrl} fill priority style={{ objectFit: 'cover' }} alt="background image" />
+      <Image
+        src={backgroundUrl}
+        fill
+        priority
+        style={{ objectFit: 'cover' }}
+        alt="background image"
+      />
 
       <div className="z-10 flex flex-col items-center">
-        {mode === TimerMode.clock && <Clock timerColor={timerColor} /> }
+        {mode === TimerMode.clock && <Clock timerColor={timerColor} />}
         {mode === TimerMode.stopwatch && <Timer timerColor={timerColor} />}
-        {mode === TimerMode.timer && <Timer delay={1000000} timerColor={timerColor} />}
+        {mode === TimerMode.timer && (
+          <Timer delay={1000000} timerColor={timerColor} />
+        )}
 
         <TimeModeSelector />
       </div>
 
-      <div className="absolute h-full w-full" style={{ opacity: overlayOpacity, backgroundColor: overlayColor }} />
+      <div
+        className="absolute h-full w-full"
+        style={{ opacity: overlayOpacity, backgroundColor: overlayColor }}
+      />
     </div>
   );
 }

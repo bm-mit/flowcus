@@ -6,8 +6,9 @@ type TimerModeContextType = {
   setTimerMode: Dispatch<SetStateAction<TimerMode>>;
 };
 
-const TimerModeContext = createContext<TimerModeContextType>(
-  { timerMode: TimerMode.clock, setTimerMode: () => {} },
-);
+const TimerModeContext = createContext<TimerModeContextType>({
+  timerMode: TimerMode.clock,
+  setTimerMode: () => {},
+});
 
 export default TimerModeContext;

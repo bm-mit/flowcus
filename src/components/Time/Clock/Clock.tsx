@@ -4,13 +4,15 @@ import { useEffect, useState } from 'react';
 import time from '@/utils/time';
 
 interface ClockProps {
-  timerColor?: string
+  timerColor?: string;
 }
 
 const timeFormat = 'HH:mm';
 
 export default function Clock({ timerColor = 'white' }: ClockProps) {
-  const [timeString, setTimeString] = useState<string>(time.getCurrentTimeString(timeFormat));
+  const [timeString, setTimeString] = useState<string>(
+    time.getCurrentTimeString(timeFormat),
+  );
 
   useEffect(() => {
     const timeInterval = setInterval(() => {

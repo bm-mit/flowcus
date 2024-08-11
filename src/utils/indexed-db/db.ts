@@ -11,7 +11,8 @@ export type Db = Dexie & {
 const db = new Dexie('UserConfigs') as Db;
 
 db.version(1).stores({
-  configProfiles: '++id, backgroundImageUrl, overlayColor, overlayOpacity, timerColor',
+  configProfiles:
+    '++id, backgroundImageUrl, overlayColor, overlayOpacity, timerColor',
 });
 
 db.on('populate', populate);

@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+svg {
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+svg path {
+  fill: currentColor;
+  stroke: currentColor;
+}

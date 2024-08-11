@@ -2,7 +2,8 @@
   "root": true,
   "plugins": [
     "@typescript-eslint",
-    "react"
+    "react",
+    "prettier"
   ],
   "parser": "@typescript-eslint/parser",
   "extends": [
@@ -12,14 +13,18 @@
     "airbnb",
     "airbnb-typescript",
     "next/core-web-vitals",
-    "plugin:storybook/recommended"
+    "plugin:storybook/recommended",
+    "plugin:prettier/recommended"
   ],
   "parserOptions": {
     "project": "./tsconfig.json"
   },
   "rules": {
+    "prettier/prettier": ["error", {
+      "singleQuote": true
+    }],
     "react/function-component-definition": [
-      2,
+      "error",
       {
         "namedComponents": "function-declaration",
         "unnamedComponents": "arrow-function"

@@ -11,4 +11,4 @@ export default meta;
 
 type Story = StoryObj<typeof Home>;
 
-export const Default : Story = {};
+export const Default: Story = {};
