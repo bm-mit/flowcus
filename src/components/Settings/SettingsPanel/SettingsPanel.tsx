@@ -9,8 +9,8 @@ export default function SettingsPanel() {
   return (
     <div
       className={twMerge(
-        'fixed left-0 top-0 z-10 flex size-full items-center justify-center bg-black/50 opacity-100 transition-all',
-        !settingsPanelVisibility && 'hidden opacity-0',
+        'fixed left-0 top-0 z-10 flex size-full items-center justify-center bg-black/50 transition-opacity duration-300',
+        !settingsPanelVisibility && 'h-0 opacity-0',
       )}
     >
       <div className="relative size-4/5 rounded-2xl bg-red-500">

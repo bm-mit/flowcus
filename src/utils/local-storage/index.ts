@@ -5,6 +5,7 @@ import localForage from 'localforage';
 import defaultLocalStorageValues from '@/utils/local-storage/default-values';
 
 localForage.config({
+  name: 'flowcus',
   driver: localForage.LOCALSTORAGE,
   version: 1.0,
 });

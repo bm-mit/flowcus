@@ -5,11 +5,13 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import SettingsButton from '@/components/Settings/SettingsButton';
 import SettingsPanel from '@/components/Settings/SettingsPanel';
 import Time from '@/components/Time';
+import ConfigProfileContext from '@/contexts/ConfigProfile';
 import SettingsPanelVisibility from '@/contexts/SettingsPanelVisibility';
 import TimerColorContext from '@/contexts/TimerColorContext';
 import TimerModeContext from '@/contexts/TimerModeContext';
+import { ConfigProfile, defaultConfigProfile } from '@/types/config.types';
 import TimerMode from '@/types/timer-mode.types';
-import db from '@/utils/indexed-db/db';
+import config from '@/utils/config';
 import localStorage from '@/utils/local-storage';
 import { CONFIG_PROFILE_ID } from '@/utils/local-storage/keys';
 
@@ -18,6 +20,8 @@ export default function Home() {
   const [timerColor, setTimerColor] = useState<string>('white');
   const [settingsPanelVisibility, setSettingsPanelVisibility] =
     useState<boolean>(false);
+  const [configProfile, setConfigProfile] =
+    useState<ConfigProfile>(defaultConfigProfile);
 
   const toggleSettingsPanelVisibility = useCallback(
     () => setSettingsPanelVisibility(!settingsPanelVisibility),
@@ -29,11 +33,7 @@ export default function Home() {
       const configProfileId =
         await localStorage.getItem<number>(CONFIG_PROFILE_ID);
 
-      const configProfile = await db.configProfiles.get(configProfileId);
-
-      if (configProfile) {
-        setTimerColor(configProfile.timerColor);
-      }
+      setConfigProfile(await config.getConfigProfile(configProfileId));
     })();
   }, []);
 
@@ -54,18 +54,22 @@ export default function Home() {
     };
   }, [settingsPanelVisibility, toggleSettingsPanelVisibility]);
 
-  return (
-    <div className="relative">
-      <TimerModeContext.Provider value={timerModeMemo}>
-        <TimerColorContext.Provider value={timerColorMemo}>
-          <Time />
-        </TimerColorContext.Provider>
-      </TimerModeContext.Provider>
+  const configProfileMemo = useMemo(() => configProfile, [configProfile]);
 
-      <SettingsPanelVisibility.Provider value={settingsPanelVisibilityMemo}>
-        <SettingsButton className="absolute bottom-8 right-8" />
-        <SettingsPanel />
-      </SettingsPanelVisibility.Provider>
-    </div>
+  return (
+    <ConfigProfileContext.Provider value={configProfileMemo}>
+      <div className="relative">
+        <TimerModeContext.Provider value={timerModeMemo}>
+          <TimerColorContext.Provider value={timerColorMemo}>
+            <Time />
+          </TimerColorContext.Provider>
+        </TimerModeContext.Provider>
+
+        <SettingsPanelVisibility.Provider value={settingsPanelVisibilityMemo}>
+          <SettingsButton className="absolute bottom-8 right-8" />
+          <SettingsPanel />
+        </SettingsPanelVisibility.Provider>
+      </div>
+    </ConfigProfileContext.Provider>
   );
 }

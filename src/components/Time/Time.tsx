@@ -18,8 +18,7 @@ import TimeModeSelector from './TimeModeSelector';
 export default function Time() {
   const { timerMode } = useContext(TimerModeContext);
   const [backgroundUrl, setBackgroundUrl] = useState<string>('/');
-  const [overlayOpacity, setOverlayOpacity] = useState<number>(1);
-  const [overlayColor, setOverlayColor] = useState<string>('black');
+  const [backgroundDim, setBackgroundDim] = useState<number>(0);
 
   ReactDOM.preconnect('https://www.images.unsplash.com');
 
@@ -32,8 +31,7 @@ export default function Time() {
 
       if (configProfile) {
         setBackgroundUrl(configProfile.backgroundImageUrl);
-        setOverlayOpacity(configProfile.overlayOpacity);
-        setOverlayColor(configProfile.overlayColor);
+        setBackgroundDim(configProfile.backgroundDim);
       }
     })();
   });
@@ -44,7 +42,10 @@ export default function Time() {
         src={backgroundUrl}
         fill
         priority
-        style={{ objectFit: 'cover' }}
+        style={{
+          objectFit: 'cover',
+          filter: `brightness(${1 - backgroundDim})`,
+        }}
         alt="background image"
       />
 
@@ -62,11 +63,6 @@ export default function Time() {
 
         <TimeModeSelector />
       </div>
-
-      <div
-        className="absolute size-full"
-        style={{ opacity: overlayOpacity, backgroundColor: overlayColor }}
-      />
     </div>
   );
 }

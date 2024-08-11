@@ -13,7 +13,7 @@ const db = new Dexie('UserConfigs') as Db;
 
 db.version(1).stores({
   configProfiles:
-    '++id, backgroundImageUrl, overlayColor, overlayOpacity, timerColor',
+    '++id, backgroundImageUrl, backgroundDim, timerColor, themeColor',
 });
 
 db.on('populate', populate);
