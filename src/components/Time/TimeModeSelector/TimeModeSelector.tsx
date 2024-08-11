@@ -1,8 +1,9 @@
+import clsx from 'clsx';
 import { useContext } from 'react';
+import { twMerge } from 'tailwind-merge';
+
 import TimerModeContext from '@/contexts/TimerModeContext';
 import TimerMode from '@/types/timer-mode.types';
-import clsx from 'clsx';
-import { twMerge } from 'tailwind-merge';
 
 export default function TimeModeSelector() {
   const { timerMode, setTimerMode } = useContext(TimerModeContext);

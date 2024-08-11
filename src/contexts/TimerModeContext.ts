@@ -1,4 +1,5 @@
 import { createContext, Dispatch, SetStateAction } from 'react';
+
 import TimerMode from '@/types/timer-mode.types';
 
 type TimerModeContextType = {

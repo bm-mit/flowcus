@@ -1,7 +1,8 @@
-import { TimeUnits } from '@/types/time.types';
 import { HTMLAttributes } from 'react';
 import { twMerge } from 'tailwind-merge';
+
 import useTimerColorContext from '@/hooks/useTimerColorContext';
+import { TimeUnits } from '@/types/time.types';
 
 interface TimerViewProps extends HTMLAttributes<HTMLDivElement> {
   units: TimeUnits;

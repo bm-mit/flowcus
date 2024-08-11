@@ -1,6 +1,7 @@
 'use client';
 
 import Dexie, { type EntityTable } from 'dexie';
+
 import type { ConfigProfile } from '@/types/config.types';
 import { populate } from '@/utils/indexed-db/events';
 

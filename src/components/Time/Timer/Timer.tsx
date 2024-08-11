@@ -1,9 +1,10 @@
-import { useTimer } from 'react-use-precision-timer';
 import { HTMLAttributes, useEffect, useState } from 'react';
-import TimerController from '@/components/Time/Timer/TimerController';
-import time from '@/utils/time';
-import TimerView from '@/components/Time/Timer/TimerView/TimerView';
+import { useTimer } from 'react-use-precision-timer';
 import { twMerge } from 'tailwind-merge';
+
+import TimerController from '@/components/Time/Timer/TimerController';
+import TimerView from '@/components/Time/Timer/TimerView/TimerView';
+import time from '@/utils/time';
 
 interface TimerProps extends HTMLAttributes<HTMLDivElement> {
   delay?: number;

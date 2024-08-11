@@ -1,18 +1,28 @@
 'use client';
 
+import { useCallback, useEffect, useMemo, useState } from 'react';
+
+import SettingsButton from '@/components/Settings/SettingsButton';
+import SettingsPanel from '@/components/Settings/SettingsPanel';
 import Time from '@/components/Time';
-import { useEffect, useMemo, useState } from 'react';
+import SettingsPanelVisibility from '@/contexts/SettingsPanelVisibility';
+import TimerColorContext from '@/contexts/TimerColorContext';
 import TimerModeContext from '@/contexts/TimerModeContext';
 import TimerMode from '@/types/timer-mode.types';
-import SettingsButton from '@/components/Settings/SettingsButton';
-import TimerColorContext from '@/contexts/TimerColorContext';
+import db from '@/utils/indexed-db/db';
 import localStorage from '@/utils/local-storage';
 import { CONFIG_PROFILE_ID } from '@/utils/local-storage/keys';
-import db from '@/utils/indexed-db/db';
 
 export default function Home() {
   const [timerMode, setTimerMode] = useState<TimerMode>(TimerMode.clock);
   const [timerColor, setTimerColor] = useState<string>('white');
+  const [settingsPanelVisibility, setSettingsPanelVisibility] =
+    useState<boolean>(false);
+
+  const toggleSettingsPanelVisibility = useCallback(
+    () => setSettingsPanelVisibility(!settingsPanelVisibility),
+    [settingsPanelVisibility],
+  );
 
   useEffect(() => {
     (async () => {
@@ -37,6 +47,13 @@ export default function Home() {
     [timerColor],
   );
 
+  const settingsPanelVisibilityMemo = useMemo(() => {
+    return {
+      settingsPanelVisibility,
+      toggleSettingsPanelVisibility,
+    };
+  }, [settingsPanelVisibility, toggleSettingsPanelVisibility]);
+
   return (
     <div className="relative">
       <TimerModeContext.Provider value={timerModeMemo}>
@@ -45,7 +62,10 @@ export default function Home() {
         </TimerColorContext.Provider>
       </TimerModeContext.Provider>
 
-      <SettingsButton className="absolute bottom-8 right-8" />
+      <SettingsPanelVisibility.Provider value={settingsPanelVisibilityMemo}>
+        <SettingsButton className="absolute bottom-8 right-8" />
+        <SettingsPanel />
+      </SettingsPanelVisibility.Provider>
     </div>
   );
 }

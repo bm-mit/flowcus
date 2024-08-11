@@ -1,17 +1,19 @@
 'use client';
 
+import clsx from 'clsx';
+import Image from 'next/image';
+import { useContext, useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
+
+import Timer from '@/components/Time/Timer';
+import TimerModeContext from '@/contexts/TimerModeContext';
+import TimerMode from '@/types/timer-mode.types';
 import db from '@/utils/indexed-db/db';
 import localStorage from '@/utils/local-storage';
 import { CONFIG_PROFILE_ID } from '@/utils/local-storage/keys';
-import { useContext, useEffect, useState } from 'react';
-import Image from 'next/image';
-import TimerMode from '@/types/timer-mode.types';
-import ReactDOM from 'react-dom';
-import Timer from '@/components/Time/Timer';
-import TimerModeContext from '@/contexts/TimerModeContext';
-import clsx from 'clsx';
-import TimeModeSelector from './TimeModeSelector';
+
 import Clock from './Clock';
+import TimeModeSelector from './TimeModeSelector';
 
 export default function Time() {
   const { timerMode } = useContext(TimerModeContext);

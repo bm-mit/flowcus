@@ -1,6 +1,8 @@
-import type { Metadata } from 'next';
 import './globals.css';
+
+import type { Metadata } from 'next';
 import React from 'react';
+
 import { josefinSans } from '@/utils/fonts';
 
 export const metadata: Metadata = {

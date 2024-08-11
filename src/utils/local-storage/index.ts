@@ -1,6 +1,7 @@
 'use client';
 
 import localForage from 'localforage';
+
 import defaultLocalStorageValues from '@/utils/local-storage/default-values';
 
 localForage.config({

@@ -1,5 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
+
 import TimerMode from '@/types/timer-mode.types';
+
 import Time from './Time';
 
 const meta: Meta<typeof Time> = {

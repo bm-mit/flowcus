@@ -1,9 +1,10 @@
 'use client';
 
 import { HTMLAttributes, useEffect, useMemo, useState } from 'react';
+import { twMerge } from 'tailwind-merge';
+
 import useTimerColorContext from '@/hooks/useTimerColorContext';
 import time from '@/utils/time';
-import { twMerge } from 'tailwind-merge';
 
 interface ClockProps extends HTMLAttributes<HTMLDivElement> {}
 
