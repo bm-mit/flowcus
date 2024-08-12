@@ -1,10 +1,10 @@
 import { twMerge } from 'tailwind-merge';
 
-import useSettingsPanelVisibility from '@/hooks/useSettingsPanelVisibility';
+import useSettingsPanelVisibilityContext from '@/hooks/useSettingsPanelVisibilityContext';
 
 export default function SettingsPanel() {
   const { settingsPanelVisibility, toggleSettingsPanelVisibility } =
-    useSettingsPanelVisibility();
+    useSettingsPanelVisibilityContext();
 
   return (
     <div

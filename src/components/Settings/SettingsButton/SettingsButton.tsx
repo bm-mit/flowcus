@@ -1,13 +1,13 @@
 import { HTMLAttributes } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import useSettingsPanelVisibility from '@/hooks/useSettingsPanelVisibility';
+import useSettingsPanelVisibilityContext from '@/hooks/useSettingsPanelVisibilityContext';
 import SettingsIcon from '@/icons/settings-black.svg';
 
 interface SettingsButtonProps extends HTMLAttributes<HTMLDivElement> {}
 
 export default function SettingsButton({ className }: SettingsButtonProps) {
-  const { toggleSettingsPanelVisibility } = useSettingsPanelVisibility();
+  const { toggleSettingsPanelVisibility } = useSettingsPanelVisibilityContext();
 
   return (
     <button

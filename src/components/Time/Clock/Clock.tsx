@@ -3,13 +3,13 @@
 import { HTMLAttributes, useEffect, useMemo, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import useTimerColorContext from '@/hooks/useTimerColorContext';
+import useConfigProfileContext from '@/hooks/useConfigProfileContext';
 import time from '@/utils/time';
 
 interface ClockProps extends HTMLAttributes<HTMLDivElement> {}
 
 export default function Clock({ className }: ClockProps) {
-  const { timerColor } = useTimerColorContext();
+  const { timerColor } = useConfigProfileContext();
   const timeFormat = useMemo(() => 'HH:mm', []);
 
   const [timeString, setTimeString] = useState<string>(

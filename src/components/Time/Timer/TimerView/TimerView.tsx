@@ -1,7 +1,7 @@
 import { HTMLAttributes } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import useTimerColorContext from '@/hooks/useTimerColorContext';
+import useConfigProfileContext from '@/hooks/useConfigProfileContext';
 import { TimeUnits } from '@/types/time.types';
 
 interface TimerViewProps extends HTMLAttributes<HTMLDivElement> {
@@ -9,7 +9,7 @@ interface TimerViewProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export default function TimerView({ units, className }: TimerViewProps) {
-  const { timerColor } = useTimerColorContext();
+  const { timerColor } = useConfigProfileContext();
 
   return (
     <div

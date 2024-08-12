@@ -1,14 +1,14 @@
 import { createContext, Dispatch, SetStateAction } from 'react';
 
-import TimerMode from '@/types/timer-mode.types';
+import TimerModeEnum from '@/types/timer-mode.types';
 
-type TimerModeContextType = {
-  timerMode: TimerMode;
-  setTimerMode: Dispatch<SetStateAction<TimerMode>>;
+type TimerMode = {
+  timerMode: TimerModeEnum;
+  setTimerMode: Dispatch<SetStateAction<TimerModeEnum>>;
 };
 
-const TimerModeContext = createContext<TimerModeContextType>({
-  timerMode: TimerMode.clock,
+const TimerModeContext = createContext<TimerMode>({
+  timerMode: TimerModeEnum.clock,
   setTimerMode: () => {},
 });
 
