@@ -1,10 +1,11 @@
 import chroma from 'chroma-js';
-import { HTMLAttributes, useEffect, useMemo, useRef, useState } from 'react';
+import { HTMLAttributes, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
-import { useHover } from 'usehooks-ts';
 
 import useConfigProfileContext from '@/hooks/useConfigProfileContext';
+import useHover from '@/hooks/useHover';
 import useSettingsPanelVisibilityContext from '@/hooks/useSettingsPanelVisibilityContext';
+import CloseIcon from '@/icons/close-black.svg';
 
 interface ClosePanelButtonProps extends HTMLAttributes<HTMLDivElement> {}
 
@@ -13,19 +14,10 @@ export default function ClosePanelButton({
 }: ClosePanelButtonProps) {
   const { toggleSettingsPanelVisibility } = useSettingsPanelVisibilityContext();
   const { themeColor } = useConfigProfileContext();
-  const [, setElementRef] = useState<HTMLElement | null>(null);
+  const [hoverRef, isHover] = useHover();
 
-  // Create a local ref to store the actual DOM node
-  const hoverRef = useRef(null);
-  const isHover = useHover(hoverRef);
-
-  // Sync local ref with state
-  useEffect(() => {
-    setElementRef(hoverRef.current);
-  }, [hoverRef]);
-
-  const bgColor = useMemo(
-    () => chroma(themeColor).darken(0.5).hex('rgb'),
+  const hoverFgColor = useMemo(
+    () => chroma(themeColor).darken(1).hex('rgb'),
     [themeColor],
   );
 
@@ -33,9 +25,17 @@ export default function ClosePanelButton({
     <div
       ref={hoverRef}
       role="presentation"
-      className={twMerge('size-8 rounded-full transition-all', className)}
-      style={{ backgroundColor: isHover ? bgColor : 'transparent' }}
+      className={twMerge(
+        'flex size-8 items-center rounded-full transition-all',
+        className,
+      )}
+      style={{ backgroundColor: isHover ? hoverFgColor : 'transparent' }}
       onClick={toggleSettingsPanelVisibility}
-    />
+    >
+      <CloseIcon
+        className="m-auto size-6 transition-all"
+        style={{ color: isHover ? themeColor : hoverFgColor }}
+      />
+    </div>
   );
 }

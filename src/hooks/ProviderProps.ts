@@ -1,5 +1,3 @@
-import React from 'react';
+import { ContainerProps } from '@/types/props.types';
 
-export default interface ProviderProps {
-  children: React.ReactNode;
-}
+export default interface ProviderProps extends ContainerProps {}

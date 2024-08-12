@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import SettingsPanel from '.';
+import SettingsPanel from './index';
 
 const meta: Meta<typeof SettingsPanel> = {
   component: SettingsPanel,

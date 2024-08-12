@@ -1,7 +1,7 @@
 'use client';
 
 import SettingsButton from '@/components/Settings/SettingsButton';
-import SettingsPanel from '@/components/Settings/SettingsPanel';
+import SettingsOverlay from '@/components/Settings/SettingsOverlay';
 import Time from '@/components/Time';
 import { ConfigProfileProvider } from '@/hooks/useConfigProfileContext';
 import { SettingsPanelVisibilityProvider } from '@/hooks/useSettingsPanelVisibilityContext';
@@ -17,7 +17,7 @@ export default function Home() {
 
         <SettingsPanelVisibilityProvider>
           <SettingsButton className="absolute bottom-8 right-8" />
-          <SettingsPanel />
+          <SettingsOverlay className="fixed left-0 top-0 " />
         </SettingsPanelVisibilityProvider>
       </div>
     </ConfigProfileProvider>
