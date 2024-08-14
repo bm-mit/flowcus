@@ -1,22 +1,18 @@
 'use client';
 
-import { useCallback, useContext, useMemo, useState } from 'react';
+import { useContext, useMemo } from 'react';
 
 import SettingsPanelVisibilityContext from '@/contexts/SettingsPanelVisibilityContext';
 import ProviderProps from '@/hooks/ProviderProps';
+import useToggle from '@/hooks/useToggle';
 
 export default function useSettingsPanelVisibilityContext() {
   return useContext(SettingsPanelVisibilityContext);
 }
 
 export function SettingsPanelVisibilityProvider({ children }: ProviderProps) {
-  const [settingsPanelVisibility, setSettingsPanelVisibility] =
-    useState<boolean>(false);
-
-  const toggleSettingsPanelVisibility = useCallback(
-    () => setSettingsPanelVisibility(!settingsPanelVisibility),
-    [settingsPanelVisibility],
-  );
+  const [settingsPanelVisibility, toggleSettingsPanelVisibility] =
+    useToggle(false);
 
   const settingsPanelVisibilityMemo = useMemo(
     () => ({ settingsPanelVisibility, toggleSettingsPanelVisibility }),

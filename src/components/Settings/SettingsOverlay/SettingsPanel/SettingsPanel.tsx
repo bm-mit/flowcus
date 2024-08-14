@@ -1,12 +1,11 @@
 import chroma from 'chroma-js';
-import { HexColorPicker } from 'react-colorful';
 
 import PanelTitle from '@/components/Settings/SettingsOverlay/SettingsPanel/PanelTitle';
 import SettingsItem from '@/components/Settings/SettingsOverlay/SettingsPanel/SettingsItem';
-import ThemeColorPicker from '@/components/Settings/SettingsOverlay/SettingsPanel/ThemeColorPicker';
 import useConfigProfileContext from '@/hooks/useConfigProfileContext';
 
 import ClosePanelButton from './ClosePanelButton';
+import ThemeColorPickerButton from './ThemeColorPickerButton';
 
 export default function SettingsPanel() {
   const { themeColor } = useConfigProfileContext();
@@ -25,8 +24,11 @@ export default function SettingsPanel() {
 
       <div className="flex flex-col gap-2">
         <SettingsItem>
-          <div>Theme Color</div>
-          <ThemeColorPicker />
+          <div>
+            Theme Color
+            <p className="text-sm font-light">Adjust your UI color.</p>
+          </div>
+          <ThemeColorPickerButton />
         </SettingsItem>
 
         <SettingsItem>
