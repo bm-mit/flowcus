@@ -1,9 +1,12 @@
 import chroma from 'chroma-js';
-import { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import { twMerge } from 'tailwind-merge';
 
+import ValidatedInput from '@/components/Controls/ValidatedInput';
 import useConfigProfileContext from '@/hooks/useConfigProfileContext';
+import colors from '@/utils/colors';
+import ignoreParentMouseEvent from '@/utils/handlers/ignoreParentMouseEvent';
 
 interface ThemeColorPickerPanelProps {
   className?: string;
@@ -15,10 +18,9 @@ export default function ThemeColorPickerPanel({
   const { themeColor } = useConfigProfileContext();
   const [currentColor, setCurrentColor] = useState(themeColor);
 
-  const overlayBgColor = useMemo(
-    () => chroma(currentColor).alpha(0.3).hex(),
-    [currentColor],
-  );
+  const textColor = colors.textColor(currentColor);
+  const parsedCurrentColor = chroma(currentColor).hex();
+  const overlayBgColor = chroma(currentColor).alpha(0.3).hex();
 
   return (
     <div
@@ -29,17 +31,24 @@ export default function ThemeColorPickerPanel({
       <div
         role="presentation"
         className="flex flex-col gap-4 rounded-2xl p-4"
-        style={{ backgroundColor: currentColor }}
-        onClick={(e) => e.stopPropagation()}
+        style={{ backgroundColor: parsedCurrentColor }}
+        onClick={ignoreParentMouseEvent}
       >
         <HexColorPicker
+          color={themeColor}
           onChange={(newColor) => {
             setCurrentColor(newColor);
           }}
         />
-        <div className="text-center" contentEditable>
-          {currentColor}
-        </div>
+
+        <ValidatedInput
+          className="rounded-md border-2 border-transparent bg-transparent text-center outline-0"
+          invalidClassName="border-2 border-red-500"
+          style={{ color: textColor }}
+          validator={chroma.valid}
+          validatedValue={currentColor}
+          setValidatedValue={setCurrentColor}
+        />
       </div>
     </div>
   );
