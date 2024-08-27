@@ -23,12 +23,13 @@ export default function ValidatedInput({
 }: ValidatedInputProps) {
   const [unvalidatedValue, setUnvalidatedValue] =
     useState<string>(validatedValue);
-  const isUnvalidatedValueValid = useValidator(unvalidatedValue, validator);
+  const isUnvalidatedValueValid = validator(unvalidatedValue);
 
   useSyncStateWithProp(validatedValue, setUnvalidatedValue);
   useEffect(() => {
     if (isUnvalidatedValueValid) {
       setValidatedValue(unvalidatedValue);
+      setUnvalidatedValue(unvalidatedValue);
     }
   }, [unvalidatedValue, isUnvalidatedValueValid, setValidatedValue]);
 

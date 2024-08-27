@@ -17,7 +17,7 @@ export default function Home() {
 
         <SettingsPanelVisibilityProvider>
           <SettingsButton className="absolute bottom-8 right-8" />
-          <SettingsOverlay className="fixed left-0 top-0 " />
+          <SettingsOverlay className="fixed left-0 top-0" />
         </SettingsPanelVisibilityProvider>
       </div>
     </ConfigProfileProvider>

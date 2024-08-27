@@ -1,13 +1,13 @@
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 export default function useToggle(
   initialState: boolean,
-): [boolean, () => void] {
+): [boolean, () => void, React.Dispatch<React.SetStateAction<boolean>>] {
   const [state, setState] = useState<boolean>(initialState);
 
   const toggle = useCallback(() => {
-    setState(!state);
-  }, [state]);
+    setState((s) => !s);
+  }, []);
 
-  return [state, toggle];
+  return [state, toggle, setState];
 }

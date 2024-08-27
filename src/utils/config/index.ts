@@ -14,6 +14,13 @@ const config = {
 
     return this.getConfigProfile(configProfileId);
   },
+
+  async setThemeColor(color: string) {
+    const configProfile = await this.getCurrentConfigProfile();
+
+    configProfile.themeColor = color;
+    await db.configProfiles.put(configProfile);
+  },
 };
 
 export default config;

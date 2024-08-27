@@ -30,11 +30,6 @@ export default function SettingsPanel() {
           </div>
           <ThemeColorPickerButton />
         </SettingsItem>
-
-        <SettingsItem>
-          <div>Theme Color</div>
-          <div className="bg-black text-center">wao</div>
-        </SettingsItem>
       </div>
     </div>
   );
