@@ -1,8 +1,11 @@
 import { RefObject, useEffect, useRef, useState } from 'react';
 
-export default function useHover(): [RefObject<HTMLDivElement>, boolean] {
+export default function useHover<T extends HTMLElement = HTMLDivElement>(): [
+  RefObject<T>,
+  boolean,
+] {
   const [isHovered, setIsHovered] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<T>(null);
 
   useEffect(() => {
     const node = ref.current;

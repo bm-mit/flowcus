@@ -1,29 +1,27 @@
 'use client';
 
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { useContext } from 'react';
 
 import ConfigProfileContext from '@/contexts/ConfigProfileContext';
 import ProviderProps from '@/hooks/ProviderProps';
-import { ConfigProfile, defaultConfigProfile } from '@/types/config.types';
-import config from '@/utils/config';
+import { defaultConfigProfile } from '@/types/config.types';
+import db from '@/utils/indexed-db/db';
+import defaultLocalStorageValues from '@/utils/local-storage/default-values';
 
 export default function useConfigProfileContext() {
   return useContext(ConfigProfileContext);
 }
 
 export function ConfigProfileProvider({ children }: ProviderProps) {
-  const [configProfile, setConfigProfile] =
-    useState<ConfigProfile>(defaultConfigProfile);
+  const configProfile =
+    useLiveQuery(
+      () => db.configProfiles.get(defaultLocalStorageValues.configProfileId),
+      [],
+    ) ?? defaultConfigProfile;
 
-  useEffect(() => {
-    (async () => {
-      setConfigProfile(await config.getCurrentConfigProfile());
-    })();
-  }, []);
-
-  const configProfileMemo = useMemo(() => configProfile, [configProfile]);
   return (
-    <ConfigProfileContext.Provider value={configProfileMemo}>
+    <ConfigProfileContext.Provider value={configProfile}>
       {children}
     </ConfigProfileContext.Provider>
   );
