@@ -1,10 +1,4 @@
-import React, {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from 'react';
+import React, { useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 interface ValidatedInputProps {
@@ -16,40 +10,37 @@ interface ValidatedInputProps {
   style?: React.CSSProperties;
 }
 
-const ValidatedInput = forwardRef(
-  (
-    {
-      value,
-      className = undefined,
-      invalidClassName = undefined,
-      validate,
-      onValidated = undefined,
-      style = undefined,
-    }: ValidatedInputProps,
-    forwardedRef,
-  ) => {
-    const [unvalidatedValue, setUnvalidatedValue] = useState<string>(value);
+export default function ValidatedInput({
+  value,
+  className = undefined,
+  invalidClassName = undefined,
+  validate,
+  onValidated = undefined,
+  style = undefined,
+}: ValidatedInputProps) {
+  const [unvalidatedValue, setUnvalidatedValue] = useState<string>(value);
 
-    const ref = useRef<HTMLInputElement>(null);
-    useImperativeHandle(forwardedRef, () => ref.current as HTMLInputElement);
+  useEffect(() => {
+    setUnvalidatedValue(value);
+  }, [value]);
 
-    useEffect(() => {
-      if (ref.current)
-        setUnvalidatedValue((ref.current as HTMLInputElement).value);
-    }, [ref, onValidated, unvalidatedValue, validate]);
+  return (
+    <input
+      className={twMerge(
+        'invalid:bg-black',
+        className,
+        !validate(unvalidatedValue) && invalidClassName,
+      )}
+      style={style}
+      onInput={(event) => {
+        const inputString = (event.target as HTMLInputElement).value;
+        setUnvalidatedValue(inputString);
 
-    return (
-      <input
-        ref={ref}
-        className={twMerge('invalid:bg-black', className)}
-        style={style}
-        onInput={(event) => {
-          setUnvalidatedValue((event.target as HTMLInputElement).value);
-        }}
-        aria-invalid="true"
-      />
-    );
-  },
-);
-
-export default ValidatedInput;
+        if (validate(inputString)) {
+          onValidated?.(inputString);
+        }
+      }}
+      value={unvalidatedValue}
+    />
+  );
+}

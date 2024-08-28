@@ -3,10 +3,12 @@ import { useContext } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import TimerModeContext from '@/contexts/TimerModeContext';
+import useConfigProfileContext from '@/hooks/useConfigProfileContext';
 import TimerMode from '@/types/timer-mode.types';
 
 export default function TimeModeSelector() {
   const { timerMode, setTimerMode } = useContext(TimerModeContext);
+  const { themeColor } = useConfigProfileContext();
 
   function changeMode(mode: TimerMode): void {
     setTimerMode(mode);
@@ -55,10 +57,11 @@ export default function TimeModeSelector() {
 
       <div
         className={clsx(
-          'absolute -z-10 h-full w-20 rounded-full bg-blue-600 transition-all',
+          'absolute -z-10 h-full w-20 rounded-full transition-all',
           timerMode === TimerMode.stopwatch && 'translate-x-20',
           timerMode === TimerMode.timer && 'translate-x-40',
         )}
+        style={{ backgroundColor: themeColor }}
       />
     </div>
   );

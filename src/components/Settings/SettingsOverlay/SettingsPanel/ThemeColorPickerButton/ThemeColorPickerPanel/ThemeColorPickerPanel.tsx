@@ -1,5 +1,5 @@
 import chroma from 'chroma-js';
-import { MouseEventHandler, useRef, useState } from 'react';
+import { MouseEventHandler, useEffect, useRef, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import { twMerge } from 'tailwind-merge';
 
@@ -20,7 +20,7 @@ export default function ThemeColorPickerPanel({
   const { themeColor } = useConfigProfileContext();
   const [currentColor, setCurrentColor] = useState(themeColor);
 
-  const inputRef = useRef<HTMLInputElement>(null);
+  const currentRgb = chroma(currentColor).hex();
 
   const textColor = colors.textColor(currentColor);
   const bgColor = chroma(currentColor).hex();
@@ -30,11 +30,6 @@ export default function ThemeColorPickerPanel({
     (async () => {
       await config.setThemeColor(currentColor);
     })();
-  };
-
-  const temp = (value) => {
-    setCurrentColor(value);
-    console.log('set', value);
   };
 
   return (
@@ -53,22 +48,18 @@ export default function ThemeColorPickerPanel({
         style={{ backgroundColor: bgColor }}
       >
         <HexColorPicker
-          color={currentColor}
-          onChange={(value) => {
-            setCurrentColor(value);
-            if (inputRef.current) inputRef.current.value = value;
-          }}
+          color={currentRgb}
+          onChange={setCurrentColor}
           onClick={(e) => e.stopPropagation()}
         />
 
         <ValidatedInput
           className="rounded-md border-2 border-transparent bg-transparent text-center outline-0"
           invalidClassName="border-2 border-red-500"
-          ref={inputRef}
           style={{ color: textColor }}
           validate={chroma.valid}
           value={currentColor}
-          onValidated={temp}
+          onValidated={setCurrentColor}
         />
       </div>
     </div>
