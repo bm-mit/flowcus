@@ -8,13 +8,19 @@ interface TimerViewProps extends HTMLAttributes<HTMLDivElement> {
   units: TimeUnits;
 }
 
-export default function TimerView({ units, className }: TimerViewProps) {
+export default function TimerView({
+  units,
+  className,
+  onClick,
+}: TimerViewProps) {
   const { timerColor } = useConfigProfileContext();
 
   return (
     <div
+      role="presentation"
       className={twMerge('min-h-32 select-none font-mono text-9xl', className)}
       style={{ color: timerColor }}
+      onClick={onClick}
     >
       {units.hours !== 0 && `${units.hours}:`}
       {String(units.minutes).padStart(2, '0')}:

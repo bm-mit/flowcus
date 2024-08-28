@@ -2,8 +2,10 @@ import { HTMLAttributes, useEffect, useState } from 'react';
 import { useTimer } from 'react-use-precision-timer';
 import { twMerge } from 'tailwind-merge';
 
+import SetTimeModal from '@/components/Time/Timer/SetTimeModal';
 import TimerController from '@/components/Time/Timer/TimerController';
 import TimerView from '@/components/Time/Timer/TimerView/TimerView';
+import useToggle from '@/hooks/useToggle';
 import time from '@/utils/time';
 
 interface TimerProps extends HTMLAttributes<HTMLDivElement> {
@@ -13,6 +15,7 @@ interface TimerProps extends HTMLAttributes<HTMLDivElement> {
 export default function Timer({ delay = 0, className }: TimerProps) {
   const timer = useTimer({ delay });
   const [timeShown, setTimeShown] = useState(0);
+  const [timeModalVisibility, toggleTimeModalVisibility] = useToggle(false);
 
   useEffect(() => {
     const useTimeInterval = setInterval(() => {
@@ -29,7 +32,11 @@ export default function Timer({ delay = 0, className }: TimerProps) {
   return (
     <div className={twMerge('flex flex-col items-center', className)}>
       <TimerController timer={timer} />
-      <TimerView units={time.millisToUnits(timeShown)} />
+      <TimerView
+        units={time.millisToUnits(timeShown)}
+        onClick={toggleTimeModalVisibility}
+      />
+      {timeModalVisibility && <SetTimeModal />}
     </div>
   );
 }

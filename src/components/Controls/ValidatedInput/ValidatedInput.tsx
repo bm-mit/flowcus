@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import useSyncStateWithProp from '@/hooks/useSyncStateWithProp';
-import useValidator from '@/hooks/useValidator';
 
 interface ValidatedInputProps {
   className?: string;
@@ -36,6 +35,7 @@ export default function ValidatedInput({
   return (
     <input
       className={twMerge(
+        'invalid:bg-black',
         className,
         !isUnvalidatedValueValid && invalidClassName,
       )}
@@ -44,6 +44,7 @@ export default function ValidatedInput({
         setUnvalidatedValue((event.target as HTMLInputElement).value);
       }}
       value={unvalidatedValue}
+      aria-invalid="true"
     />
   );
 }
