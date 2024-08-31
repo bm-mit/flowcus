@@ -12,9 +12,7 @@ export default function Clock({ className }: ClockProps) {
   const { timerColor } = useConfigProfileContext();
   const timeFormat = useMemo(() => 'HH:mm', []);
 
-  const [timeString, setTimeString] = useState<string>(
-    time.getCurrentTimeString(timeFormat),
-  );
+  const [timeString, setTimeString] = useState<string>('00:00');
 
   useEffect(() => {
     const timeInterval = setInterval(() => {

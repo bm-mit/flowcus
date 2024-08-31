@@ -5,15 +5,17 @@ import { twMerge } from 'tailwind-merge';
 import SetTimeModal from '@/components/Time/Timer/SetTimeModal';
 import TimerController from '@/components/Time/Timer/TimerController';
 import TimerView from '@/components/Time/Timer/TimerView/TimerView';
+import useTimerContext from '@/hooks/useTimerContext';
 import useToggle from '@/hooks/useToggle';
 import time from '@/utils/time';
 
 interface TimerProps extends HTMLAttributes<HTMLDivElement> {
-  delay?: number;
+  mode?: 'timer' | 'stopwatch';
 }
 
-export default function Timer({ delay = 0, className }: TimerProps) {
-  const timer = useTimer({ delay });
+export default function Timer({ className, mode = 'timer' }: TimerProps) {
+  const [delay] = useTimerContext();
+  const timer = useTimer({ delay: mode === 'timer' ? delay : 0 });
   const [timeShown, setTimeShown] = useState(0);
   const [timeModalVisibility, toggleTimeModalVisibility] = useToggle(false);
 

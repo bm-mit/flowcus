@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+  HTMLAttributes,
+  InputHTMLAttributes,
+  useEffect,
+  useState,
+} from 'react';
 import { twMerge } from 'tailwind-merge';
 
-interface ValidatedInputProps {
+export interface ValidatedInputProps
+  extends InputHTMLAttributes<HTMLInputElement> {
   value: string;
-  className?: string;
   invalidClassName?: string;
   validate: (value: string) => boolean;
   onValidated?: (value: string) => void;
-  style?: React.CSSProperties;
 }
 
 export default function ValidatedInput({
@@ -17,6 +21,7 @@ export default function ValidatedInput({
   validate,
   onValidated = undefined,
   style = undefined,
+  placeholder = undefined,
 }: ValidatedInputProps) {
   const [unvalidatedValue, setUnvalidatedValue] = useState<string>(value);
 
@@ -40,6 +45,7 @@ export default function ValidatedInput({
           onValidated?.(inputString);
         }
       }}
+      placeholder={placeholder}
       value={unvalidatedValue}
     />
   );

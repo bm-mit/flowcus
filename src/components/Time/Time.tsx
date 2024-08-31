@@ -5,6 +5,7 @@ import Image from 'next/image';
 
 import Timer from '@/components/Time/Timer';
 import useConfigProfileContext from '@/hooks/useConfigProfileContext';
+import { TimerContextProvider } from '@/hooks/useTimerContext';
 import useTimerModeContext from '@/hooks/useTimerModeContext';
 import TimerMode from '@/types/timer-mode.types';
 
@@ -35,10 +36,9 @@ export default function Time() {
           className={clsx(timerMode !== TimerMode.stopwatch && 'hidden')}
         />
 
-        <Timer
-          delay={1000000}
-          className={clsx(timerMode !== TimerMode.timer && 'hidden')}
-        />
+        <TimerContextProvider>
+          <Timer className={clsx(timerMode !== TimerMode.timer && 'hidden')} />
+        </TimerContextProvider>
 
         <TimeModeSelector />
       </div>
