@@ -18,7 +18,7 @@ export default function TimeInput({
 
   return (
     <ValidatedInput
-      className="size-16 rounded border-2 border-transparent p-4 text-center outline-none"
+      className="size-20 rounded-lg border-2 border-transparent p-4 text-center outline-none"
       invalidClassName="border-red-500"
       style={{ backgroundColor: dimmedColor }}
       placeholder={placeholder}

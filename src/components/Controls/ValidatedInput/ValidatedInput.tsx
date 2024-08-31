@@ -32,10 +32,6 @@ export default function ValidatedInput({
         className,
         !validate(unvalidatedValue) && invalidClassName,
       )}
-      ref={(node) => {
-        console.log('ref');
-        if (node) setUnvalidatedValue(node.value);
-      }}
       style={style}
       onInput={(event) => {
         const inputString = (event.target as HTMLInputElement).value;
