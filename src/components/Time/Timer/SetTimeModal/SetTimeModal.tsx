@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 
 import Modal from '@/components/Modal';
 import TimeInput from '@/components/Time/Timer/SetTimeModal/TimeInput';
@@ -16,14 +16,23 @@ export default function SetTimeModal() {
   const [minutes, setMinutes] = useState<string>(timeUnits.minutes.toString());
   const [seconds, setSeconds] = useState<string>(timeUnits.seconds.toString());
 
-  const validateNumber = useCallback((number: string, threshold?: number) => {
-    const parsedNumber = parseInt(number, 10);
-    if (threshold === undefined) return !Number.isNaN(parsedNumber);
-    return !Number.isNaN(parsedNumber) && parsedNumber < threshold;
-  }, []);
+  const isNumber = useCallback(
+    (number: string) =>
+      !Number.isNaN(parseFloat(number)) && Number.isFinite(Number(number)),
+    [],
+  );
+
+  const validateNumber = useCallback(
+    (number: string, threshold?: number) => {
+      const parsedNumber = parseInt(number, 10);
+      if (threshold === undefined) return isNumber(number);
+      return isNumber(number) && parsedNumber < threshold;
+    },
+    [isNumber],
+  );
 
   const validateHours = useCallback(
-    (number: string) => validateNumber(number),
+    (number: string) => validateNumber(number, 100),
     [validateNumber],
   );
 
@@ -31,6 +40,34 @@ export default function SetTimeModal() {
     (number: string) => validateNumber(number, 60),
     [validateNumber],
   );
+
+  const onBlur = (
+    e: React.FocusEvent<HTMLInputElement>,
+    validate: (v: string) => boolean,
+    set: Dispatch<SetStateAction<string>>,
+  ) => {
+    const currentValue = e.currentTarget.value;
+    const parsedValue = parseInt(currentValue, 10);
+    if (validate(currentValue)) {
+      set(parsedValue.toString());
+      e.currentTarget.value = parsedValue.toString();
+    } else {
+      set('0');
+      e.currentTarget.value = '0';
+    }
+  };
+
+  const onBlurHours = (e: React.FocusEvent<HTMLInputElement>) => {
+    onBlur(e, validateHours, setHours);
+  };
+
+  const onBlurMinutes = (e: React.FocusEvent<HTMLInputElement>) => {
+    onBlur(e, validateMinutesAndSeconds, setMinutes);
+  };
+
+  const onBlurSeconds = (e: React.FocusEvent<HTMLInputElement>) => {
+    onBlur(e, validateMinutesAndSeconds, setSeconds);
+  };
 
   return (
     <Modal>
@@ -44,22 +81,22 @@ export default function SetTimeModal() {
           <TimeInput
             value={hours}
             validate={validateHours}
-            onValidated={(v) => {
-              setHours(v);
-              console.log('set', v);
-            }}
+            onValidated={setHours}
+            onBlur={onBlurHours}
           />
           :
           <TimeInput
             value={minutes}
             validate={validateMinutesAndSeconds}
             onValidated={setMinutes}
+            onBlur={onBlurMinutes}
           />
           :
           <TimeInput
             value={seconds}
             validate={validateMinutesAndSeconds}
             onValidated={setSeconds}
+            onBlur={onBlurSeconds}
           />
         </div>
       </div>

@@ -1,9 +1,4 @@
-import React, {
-  HTMLAttributes,
-  InputHTMLAttributes,
-  useEffect,
-  useState,
-} from 'react';
+import React, { InputHTMLAttributes, useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 export interface ValidatedInputProps
@@ -20,6 +15,7 @@ export default function ValidatedInput({
   invalidClassName = undefined,
   validate,
   onValidated = undefined,
+  onBlur = undefined,
   style = undefined,
   placeholder = undefined,
 }: ValidatedInputProps) {
@@ -36,6 +32,10 @@ export default function ValidatedInput({
         className,
         !validate(unvalidatedValue) && invalidClassName,
       )}
+      ref={(node) => {
+        console.log('ref');
+        if (node) setUnvalidatedValue(node.value);
+      }}
       style={style}
       onInput={(event) => {
         const inputString = (event.target as HTMLInputElement).value;
@@ -45,6 +45,7 @@ export default function ValidatedInput({
           onValidated?.(inputString);
         }
       }}
+      onBlur={onBlur}
       placeholder={placeholder}
       value={unvalidatedValue}
     />

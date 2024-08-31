@@ -11,18 +11,21 @@ export default function TimeInput({
   placeholder,
   validate,
   onValidated,
+  onBlur,
 }: TimeInputProps) {
   const { themeColor } = useConfigProfileContext();
   const dimmedColor = chroma(themeColor).darken(0.25).hex();
 
   return (
     <ValidatedInput
-      className="size-16 rounded p-4 outline-none"
+      className="size-16 rounded border-2 border-transparent p-4 text-center outline-none"
+      invalidClassName="border-red-500"
       style={{ backgroundColor: dimmedColor }}
       placeholder={placeholder}
       value={value}
       validate={validate}
       onValidated={onValidated}
+      onBlur={onBlur}
     />
   );
 }
