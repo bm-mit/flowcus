@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import ThemeColorPickerPanel from '@/components/Settings/SettingsOverlay/SettingsPanel/ThemeColorPickerButton/ThemeColorPickerPanel';
 import useConfigProfileContext from '@/hooks/useConfigProfileContext';

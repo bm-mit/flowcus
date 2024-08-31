@@ -1,25 +1,24 @@
 import chroma from 'chroma-js';
-import { HTMLAttributes, useContext, useMemo } from 'react';
+import { HTMLAttributes } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import { ModalVisibilityContext } from '@/components/Modal/Modal';
 import useConfigProfileContext from '@/hooks/useConfigProfileContext';
 import useHover from '@/hooks/useHover';
+import { useModalVisibilityContext } from '@/hooks/useModalVisibility';
 import CloseIcon from '@/icons/close-black.svg';
+import colors from '@/utils/colors';
 
 interface ClosePanelButtonProps extends HTMLAttributes<HTMLDivElement> {}
 
 export default function ClosePanelButton({
   className = undefined,
+  onClick = undefined
 }: ClosePanelButtonProps) {
-  const [, toggleModal] = useContext(ModalVisibilityContext);
   const { themeColor } = useConfigProfileContext();
   const [hoverRef, isHover] = useHover();
+  const fgColor = colors.textColor(themeColor);
 
-  const hoverFgColor = useMemo(
-    () => chroma(themeColor).darken(1).hex('rgb'),
-    [themeColor],
-  );
+  const hoverFgColor = chroma(fgColor).darken(1).hex('rgb');
 
   return (
     <div
@@ -30,7 +29,7 @@ export default function ClosePanelButton({
         className,
       )}
       style={{ backgroundColor: isHover ? hoverFgColor : 'transparent' }}
-      onClick={toggleModal}
+      onClick={onClick}
     >
       <CloseIcon
         className="m-auto size-6 transition-all"

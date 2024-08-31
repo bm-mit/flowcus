@@ -1,23 +1,13 @@
-import { createContext, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import useToggle from '@/hooks/useToggle';
+import { useModalVisibilityContext } from '@/hooks/useModalVisibility';
 
 export interface ModalProps {
   children: React.ReactNode;
 }
 
-type ModalVisibilityContextType = [boolean, () => void];
-export const ModalVisibilityContext = createContext<ModalVisibilityContextType>(
-  [true, () => {}],
-);
-
 export default function Modal({ children }: ModalProps) {
-  const [isOpen, toggleOpen, ,] = useToggle();
-  const modalVisibilityMemo = useMemo<ModalVisibilityContextType>(
-    () => [isOpen, toggleOpen],
-    [isOpen, toggleOpen],
-  );
+  const [isOpen] = useModalVisibilityContext();
 
   return (
     <section
@@ -26,9 +16,7 @@ export default function Modal({ children }: ModalProps) {
         !isOpen && 'hidden',
       )}
     >
-      <ModalVisibilityContext.Provider value={modalVisibilityMemo}>
-        {children}
-      </ModalVisibilityContext.Provider>
+      {children}
     </section>
   );
 }

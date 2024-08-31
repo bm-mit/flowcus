@@ -29,6 +29,12 @@ const time = {
       hours,
     };
   },
+  unitsToMillis({ hours, minutes, seconds }: { hours: number; minutes: number; seconds: number }) {
+    const m = hours * 60 + minutes;
+    const s = m * 60 + seconds;
+    const ms = s * 1000;
+    return ms;
+  }
 };
 
 export default time;

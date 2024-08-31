@@ -5,7 +5,9 @@ import { twMerge } from 'tailwind-merge';
 import SetTimeModal from '@/components/Time/Timer/SetTimeModal';
 import TimerController from '@/components/Time/Timer/TimerController';
 import TimerView from '@/components/Time/Timer/TimerView/TimerView';
+import { ModalVisibilityProvider } from '@/hooks/useModalVisibility';
 import useTimerContext from '@/hooks/useTimerContext';
+import useToggle from '@/hooks/useToggle';
 import time from '@/utils/time';
 
 interface TimerProps extends HTMLAttributes<HTMLDivElement> {
@@ -16,6 +18,7 @@ export default function Timer({ className, mode = 'timer' }: TimerProps) {
   const [delay] = useTimerContext();
   const timer = useTimer({ delay: mode === 'timer' ? delay : 0 });
   const [timeShown, setTimeShown] = useState(0);
+  const [isModalOpen, toggleModelOpen] = useToggle(false);
 
   useEffect(() => {
     const useTimeInterval = setInterval(() => {
@@ -32,8 +35,14 @@ export default function Timer({ className, mode = 'timer' }: TimerProps) {
   return (
     <div className={twMerge('flex flex-col items-center', className)}>
       <TimerController timer={timer} />
-      <TimerView units={time.millisToUnits(timeShown)} />
-      <SetTimeModal />
+      <TimerView
+        units={time.millisToUnits(timeShown)}
+        onClick={toggleModelOpen}
+      />
+
+      <ModalVisibilityProvider value={[isModalOpen, toggleModelOpen]}>
+        <SetTimeModal />
+      </ModalVisibilityProvider>
     </div>
   );
 }
