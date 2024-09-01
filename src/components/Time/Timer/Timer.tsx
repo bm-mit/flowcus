@@ -10,15 +10,17 @@ import useTimerContext from '@/hooks/useTimerContext';
 import useToggle from '@/hooks/useToggle';
 import time from '@/utils/time';
 
-interface TimerProps extends HTMLAttributes<HTMLDivElement> {
-  mode?: 'timer' | 'stopwatch';
-}
+interface TimerProps extends HTMLAttributes<HTMLDivElement> {}
 
-export default function Timer({ className, mode = 'timer' }: TimerProps) {
+export default function Timer({ className }: TimerProps) {
   const [delay] = useTimerContext();
-  const timer = useTimer({ delay: mode === 'timer' ? delay : 0 });
+  const timer = useTimer({
+    delay,
+    runOnce: true,
+  });
   const [timeShown, setTimeShown] = useState(0);
-  const [isModalOpen, toggleModelOpen] = useToggle(false);
+  const [isModalOpen, toggleModelOpen, openModal, closeModal] =
+    useToggle(false);
 
   useEffect(() => {
     const useTimeInterval = setInterval(() => {
@@ -26,7 +28,7 @@ export default function Timer({ className, mode = 'timer' }: TimerProps) {
         ? timer.getRemainingTime()
         : timer.getElapsedRunningTime();
 
-      setTimeShown(timer.isStarted() ? timeValue : timer.getEffectiveDelay());
+      setTimeShown(timeValue);
     }, 1);
 
     return () => clearInterval(useTimeInterval);
@@ -37,12 +39,16 @@ export default function Timer({ className, mode = 'timer' }: TimerProps) {
       <TimerController timer={timer} />
       <TimerView
         units={time.millisToUnits(timeShown)}
-        onClick={toggleModelOpen}
+        onClick={delay ? toggleModelOpen : undefined}
       />
 
-      <ModalVisibilityProvider value={[isModalOpen, toggleModelOpen]}>
-        <SetTimeModal />
-      </ModalVisibilityProvider>
+      {delay !== 0 && (
+        <ModalVisibilityProvider
+          value={[isModalOpen, toggleModelOpen, openModal, closeModal]}
+        >
+          <SetTimeModal />
+        </ModalVisibilityProvider>
+      )}
     </div>
   );
 }

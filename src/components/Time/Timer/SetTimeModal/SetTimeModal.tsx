@@ -3,12 +3,12 @@ import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import Modal from '@/components/Modal';
 import TimeInput from '@/components/Time/Timer/SetTimeModal/TimeInput';
 import useConfigProfileContext from '@/hooks/useConfigProfileContext';
+import { useModalVisibilityContext } from '@/hooks/useModalVisibility';
 import useTimerContext from '@/hooks/useTimerContext';
 import colors from '@/utils/colors';
 import time from '@/utils/time';
 
 import CloseModalButton from './CloseModalButton';
-import { useModalVisibilityContext } from '@/hooks/useModalVisibility';
 
 export default function SetTimeModal() {
   const [millis, setMillis] = useTimerContext();
@@ -21,8 +21,16 @@ export default function SetTimeModal() {
   const [, toggleModal] = useModalVisibilityContext();
 
   const closeModal = useCallback(() => {
-    setMillis(time.unitsToMillis({ hours: parseInt(hours, 10), minutes: parseInt(minutes, 10), seconds: parseInt(seconds, 10) }));
-  }, []);
+    setMillis(
+      time.unitsToMillis({
+        hours: parseInt(hours, 10),
+        minutes: parseInt(minutes, 10),
+        seconds: parseInt(seconds, 10),
+      }),
+    );
+
+    toggleModal();
+  }, [hours, minutes, seconds, setMillis, toggleModal]);
 
   const isNumber = useCallback(
     (number: string) =>
@@ -82,7 +90,10 @@ export default function SetTimeModal() {
         className="relative rounded-2xl p-4"
         style={{ backgroundColor: themeColor, color: textColor }}
       >
-        <CloseModalButton className="absolute right-2 top-2" onClick />
+        <CloseModalButton
+          className="absolute right-2 top-2"
+          onClick={closeModal}
+        />
 
         <h1 className="mb-2 text-center text-xl">Set Timer</h1>
 

@@ -7,11 +7,11 @@ import {
 import useToggle from '@/hooks/useToggle';
 
 export default function useModalVisibility() {
-  const [isOpen, toggleOpen, ,] = useToggle();
+  const [isOpen, toggleOpen, open, close] = useToggle();
 
   return useMemo<ModalVisibilityContextType>(
-    () => [isOpen, toggleOpen],
-    [isOpen, toggleOpen],
+    () => [isOpen, toggleOpen, open, close],
+    [isOpen, toggleOpen, open, close],
   );
 }
 
